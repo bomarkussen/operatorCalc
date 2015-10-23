@@ -1,0 +1,634 @@
+%\VignetteIndexEntry{About the operatorCalc package}
+%\VignetteDepends{operatorCalc}
+%\VignetteEngine{knitr::knitr}
+
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{latexsym}
+
+\newcommand{\Rset}{\mathbb{R}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\df}{\text{d}}
+\newcommand{\e}{\text{e}}
+\newcommand{\mv}{\text{E}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\cov}{\mathrm{Cov}}
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\Iop}{\mathcal{I}}
+\newcommand{\Mop}{\mathcal{M}}
+\newcommand{\Top}{\mathcal{T}}
+\newcommand{\Pop}{\mathcal{P}}
+\newcommand{\Lop}{\mathcal{L}}
+\newcommand{\Sop}{\mathcal{S}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{corr}{Corollary}
+\newtheorem{ex}{Example}
+\newtheorem*{remark}{Remark}
+
+\begin{document}
+\title{Calculus for some operators on multivariate function space}
+\author{Bo Markussen (bomar@math.ku.dk) \\ Department of Mathematical Sciences \\ University of Copenhagen}
+\date{September 11, 2014 \\ September 10, 2015: Small corrections made}
+
+\maketitle
+
+\section{Introduction}
+
+This manuscript describes an algebra of linear operators defined on the space $\mathcal{C}_\text{PW}([a,b] ; \Rset^{N \times M})$ of piecewise continuous functions defined on a compact interval $[a,b]$ with values in the space of $N \times M$-matrices. For brevity this space will be denoted by $\mathcal{H}$ in the following. The interval $[a,b]$ and an associated sampling mesh $a = t_0 = t_1 < \dotsc < t_p = t_{p+1} = b$ with $p \ge 2$ will be fixed, whereas the dimensions $N, M \in \Nset$ may change. When necessary we write $\mathcal{H}(N,M)$ to specify the matrix dimensions. Furthermore, we will assume that functions $f \in \mathcal{H}$ are continuous from the right with limits from the left, and that possible points of discontinuity only may occur at $t_j$ for $j=1,\dots,p-1$.
+
+
+\section{Operator families}
+
+This section introduces different mathematical classes of linear operators on the function space $\mathcal{H}$. These classes have been called \emph{families} in the section title to avoid confusion with the \texttt{R} classes introduced later.
+
+\subsection{Pointwise operators}
+
+The transpose $f^\top$ and the sum $f+g$ of $f, g \in \mathcal{H}(N,M)$, and the matrix product $f*g$ of $f \in \mathcal{H}(N,K)$ and $g \in \mathcal{H}(K,M)$ are defined pointwise. Furthermore, for $f \in \mathcal{H}(N,M_1)$ and $g \in \mathcal{H}(N,M_2)$ the concatenation $f \vert g \in \mathcal{H}(N,M_1+M_2)$ is defined by $(f \vert g)(t) = \big( f(t), g(t) \big)$. And as is common we sometimes will omit the asterisk in the notation for the matrix product. 
+
+\subsection{Elementary operators}
+
+The \emph{forward integral} $\mathrm{F}$, the \emph{backward integral} $\mathrm{B}$, the \emph{integral} $\mathrm{I}$, and the \emph{triangular integrals} $\mathrm{T}$ are defined on
+\begin{align*}
+\mathrm{F}&\colon \mathcal{H}(N,M) \to \mathcal{H}(N,M), &
+\mathrm{B}&\colon \mathcal{H}(N,M) \to \mathcal{H}(N,M), \\
+\mathrm{I}&\colon \mathcal{H}(N,M) \to \Rset^{N \times M}, &
+\mathrm{T}&\colon \mathcal{H}(N,M) \to \Rset^{N \times M \times p}
+\end{align*}
+and for $f \in \mathcal{H}(N,M)$ and $t \in [a,b]$ given by
+\begin{align*}
+\mathrm{F} f(t) &= \int_a^t f(s)\, \df s, &
+\mathrm{B} f(t) &= \int_t^b f(s)\, \df s, &
+\mathrm{I} f &= \int_a^b f(s)\, \df s,
+\end{align*}
+and
+\begin{equation*}
+\mathrm{T} f = \Bigg\{ \int_{t_{j-1}}^{t_j} \frac{t-t_{j-1}}{t_j-t_{j-1}} f(t)\, \df t + \int_{t_j}^{t_{j+1}} \frac{t_{j+1}-t}{t_{j+1}-t_j} f(t)\, \df t \Bigg\}_{j=1,\dotsc,p}.
+\end{equation*}
+Note that interchanging the order of integration gives identities like
+\begin{align*}
+\mathrm{I}\big( f \mathrm{F}(g) \big) &= \mathrm{I}\big( \mathrm{B}(f) g \big), &
+\mathrm{I}\big( f \mathrm{B}(g) \big) &= \mathrm{I}\big( \mathrm{F}(f) g \big).
+\end{align*}
+
+
+\subsection{Multiplication operators} \label{sec:M}
+
+\emph{Multiplication operators} will in general be denoted by the letter $\Mop$. A multiplication operator $\Mop$ is described by a function $\alpha \in \mathcal{H}(N,N)$, and its action is given by pointwise multiplication
+\begin{equation}
+\Mop f = \alpha * f, \quad f \in \mathcal{H}.
+\end{equation} 
+The identity operator on $\mathcal{H}$ is denoted by $\Iop$, and $\Iop$ is a multiplication operator.
+
+\subsection{Triangle operators} \label{sec:T}
+
+\emph{Triangle operators} will in general be denoted by the letter $\Top$. A triangle operator $\Top$ is described by two functions $\beta, \gamma \in \mathcal{H}(N,K)$ for some $K \in \Nset$, and its action is given by
+\begin{equation}
+\Top f = \beta * \mathrm{F}(\gamma^\top * f), \quad f \in \mathcal{H},
+\end{equation} 
+i.e.\ $\Top f(t) = \beta(t) \int_a^t \gamma(s)^\top f(s)\, \df s$.
+
+\subsection{Projection operators} \label{sec:P}
+
+\emph{Projection operators} will in general be denoted by the letter $\Pop$. A projection operator $\Pop$ is described by two functions $\delta, \epsilon \in \mathcal{H}(N,L)$ for some $L \in \Nset$, and its action is given by
+\begin{equation}
+\Pop f = \delta * \mathrm{I}(\epsilon^\top * f), \quad f \in \mathcal{H},
+\end{equation} 
+i.e.\ $\Pop f(t) =  \delta(t) \int_a^b \epsilon(s)^\top f(s)\, \df s$.
+
+\subsection{Lattice operators} \label{sec:L}
+
+\emph{Lattice operators} will in general be denoted by the letter $\Lop$. A lattice operator $\Lop = \Mop + \Top + \Pop$ is given as a sum of a multiplication, a triangle, and a projection operator. We will also call such a sum for a lattice operator when the multiplication part vanishes. The 5-function parametrization of a lattice operator
+\begin{equation}
+\Lop f = \alpha * f + \beta * \mathrm{F}(\gamma^\top * f) + \delta * \mathrm{I}(\epsilon^\top * f), \quad f \in \mathcal{H},
+\end{equation}
+is given by the quintet $(\alpha,\beta,\gamma,\delta,\epsilon)$. 
+
+\subsection{Symmetric lattice operators} \label{sec:S}
+
+\emph{Symmetric lattice operators} will in general be denote by the letter $\Sop$. The 5-function parametrization of a symmetric lattice operator $\Sop \sim (\alpha,\beta,\gamma,\delta,\epsilon)$ has $\alpha=\alpha^\top$, and we may assume the form 
+\begin{align*}
+\beta &= \epsilon \vert -\delta, &
+\gamma &= \delta \vert \epsilon
+\end{align*}
+with $\delta, \epsilon \in \mathcal{H}(N,L)$ and $K=2L$. In particular, we have a 3-functions parametrization of a symmetric lattice operator given by the triplet $(\alpha, \delta, \epsilon)$.
+
+
+\section{Algebraic properties}
+
+The following table displays the structural result of adding two operators from the families introduced in sections \ref{sec:M} to \ref{sec:L}:
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\hline
+Sum $A_1+A_2$ & \multicolumn{4}{|c|}{Term $A_2$:} \\
+\cline{1-1}
+Term $A_1$: & $\Mop$ & $\Top$ & $\Pop$ & $\Lop$ \\
+\cline{2-5}
+$\Mop$ & $\Mop$ & $\Mop + \Top$ & $\Mop + \Pop$ & $\Lop$ \\
+$\Top$ & $\Mop + \Top$ & $\Top$ & $\Lop$ & $\Lop$ \\
+$\Pop$ & $\Mop + \Pop$ & $\Lop$ & $\Pop$ & $\Lop$ \\
+$\Lop$ & $\Lop$ & $\Lop$ & $\Lop$ & $\Lop$ \\
+\hline
+\end{tabular}
+\end{center}
+The following table displays the structural result of multiplying two operators from the classes introduced above:
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\hline
+Product $A_1 * A_2$ & \multicolumn{4}{|c|}{Factor $A_2$:} \\
+\cline{1-1}
+Factor $A_1$: & $\Mop$ & $\Top$ & $\Pop$ & $\Lop$ \\
+\cline{2-5}
+$\Mop$ & $\Mop$ & $\Top$ & $\Pop$ & $\Lop$ \\
+$\Top$ & $\Top$ & $\Top$ & $\Pop$ & $\Lop$ \\
+$\Pop$ & $\Pop$ & $\Pop$ & $\Pop$ & $\Lop$ \\
+$\Lop$ & $\Lop$ & $\Lop$ & $\Lop$ & $\Lop$ \\
+\hline
+\end{tabular}
+\end{center}
+The following table displays the structural result of inverting an invertible operator from the classes introduced above:
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\hline
+Operator $A$ & $\Mop$ & $\Mop+\Top$ & $\Mop+\Pop$ & $\Lop$ \\
+\hline
+Inverse $A^{-1}$ & $\Mop$ & $\Mop+\Top$ & $\Mop+\Pop$ & $\Lop$ \\
+\hline
+\end{tabular}
+\end{center}
+Moreover, the sum of two symmetric lattice operators is a symmetric lattice operator, and the inverse of a symmetric lattice operator is a symmetric lattice operator.
+
+\subsection{Factorization}
+
+The $\Top\Pop$-factorization of a lattice operator $\Lop = \Mop + \Top + \Pop$ is given by
+\begin{align*}
+\Mop + \Top + \Pop &= (\Mop + \Top) (\Iop+\Pop_*), &
+\Pop_* &= (\Mop+\Top)^{-1} \Pop,
+\end{align*}
+and the $\Pop\Top$-factorization is given by
+\begin{align*}
+\Mop + \Top + \Pop &= (\Iop + \Pop_\star) (\Mop+\Top), &
+\Pop_\star &= \Pop (\Mop+\Top)^{-1} .
+\end{align*}
+We note that $\Pop_*$ and $\Pop_\star$ are projection operators. Both factorizations may be used for the inversion of a lattice operator via inversion of the factors.
+
+
+\subsection{Addition of lattice operators}
+
+Using the 5-function parametrization the sum of two lattice operators is given by
+\begin{equation*}
+(\alpha_1,\beta_1,\gamma_1,\delta_1,\epsilon_1) + (\alpha_2,\beta_2,\gamma_2,\delta_2,\epsilon_2) = (\alpha_1+\alpha_2, \beta_1\vert\beta_2, \gamma_1\vert\gamma_2, \delta_1\vert\delta_2, \epsilon_1\vert\epsilon_2).
+\end{equation*}
+The $(K,L)$-dimension in the 5-function parametrization for the sum of two lattice operators is given by
+\begin{equation*}
+(K_1,L_1) + (K_2,L_2) = (K_1+K_2,L_1+L_2).
+\end{equation*}
+
+\subsection{Multiplication of lattice operators}
+
+Using the 5-function parametrization the product of two lattice operators is given
+\begin{align*}
+(\alpha_1,\beta_1,\gamma_1,\delta_1,\epsilon_1) &* (\alpha_2,\beta_2,\gamma_2,\delta_2,\epsilon_2) \\
+= \Big(& \alpha_1 \alpha_2, \\
+& \beta_1 \big\vert \alpha_1 \beta_2 - \beta_1 \mathrm{B}(\gamma_1^\top \beta_2), &
+& \alpha_2^\top \gamma_1 + \gamma_2 \mathrm{B}(\beta_2^\top \gamma_1) \big\vert \gamma_2, \\
+& \delta_1 \big\vert \alpha_1 \delta_2 + \beta_1 \mathrm{F}(\gamma_1^\top \delta_2), &
+& \alpha_2^\top \epsilon_1 + \gamma_2 \mathrm{B}(\beta_2^\top \epsilon_1) + \epsilon_2 \mathrm{I}(\delta_2^\top \epsilon_1) \big\vert \epsilon_2
+\Big).
+\end{align*}
+The $(K,L)$-dimension in the 5-function parametrization for the product of two lattice operators is given by
+\begin{equation*}
+(K_1,L_1) * (K_2,L_2) = (K_1+K_2,L_1+L_2).
+\end{equation*}
+
+The above results follow invoking linearity on the following table:
+\begin{equation*}
+\hspace{-2cm}
+\begin{tabular}{|c|ccc|}
+\hline
+Product $A_1*A_2$ & \multicolumn{3}{|c|}{Factor $A_2$:} \\
+\cline{1-1}
+Factor $A_1$: & $(\alpha_2,0,0,0,0)$ & $(0,\beta_2,\gamma_2,0,0)$ & $(0,0,0,\delta_2,\epsilon_2)$ \\
+\cline{2-4}
+$(\alpha_1,0,0,0,0)$ & $(\alpha_1 \alpha_2,0,0,0,0)$ & $(0,\alpha_1 \beta_2, \gamma_2, 0,0)$ & $(0,0,0, \alpha_1 \delta_2, \epsilon_2)$ \\
+$(0,\beta_1,\gamma_1,0,0)$ & $(0, \beta_1, \alpha_2^\top \gamma_1, 0,0)$ & $\big(0,
+\beta_1 \vert -\beta_1 \mathrm{B}(\gamma_1^\top \beta_2),
+\gamma_2 \mathrm{B}( \beta_2^\top \gamma_1) \vert \gamma_2,
+0,0\big)$ & $\big(0,0,0,\beta_1 \mathrm{F}( \gamma_1^\top \delta_2), \epsilon_2 \big)$ \\
+$(0,0,0,\delta_1,\epsilon_1)$ & $(0,0,0, \delta_1, \alpha_2^\top \epsilon_1)$ & $\big(0,0,0,\delta_1, \gamma_2 \mathrm{B}( \beta_2^\top \epsilon_1)\big)$ & $\big(0,0,0, \delta_1, \epsilon_2 \mathrm{I}(\delta_2^\top \epsilon_1) \big)$ \\
+\hline
+\end{tabular}
+\end{equation*}
+Note also that the $(K,L)$-dimensions for multiplication are given by
+\begin{center}
+\begin{tabular}{|c|cc|}
+\hline
+Product $A_1*A_2$ & \multicolumn{2}{|c|}{Factor $A_2$:} \\
+\cline{1-1}
+Factor $A_1$: & $(K_2,0)$ & $(0,L_2)$ \\
+\cline{2-3}
+$(K_1,0)$ & $(K_1+K_2,0)$ & $(0,L_2)$ \\
+$(0,L_1)$ & $(0,L_1)$ & $(0,L_1)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Inversion}
+
+The solution to the matrix value Volterra integral equation gives the inversion
+\begin{equation*}
+(\alpha,\beta,\gamma,0,0)^{-1} = (\alpha^{-1}, -\alpha^{-1} \beta \kappa^\top, \alpha^{-1,\top} \gamma \kappa^{-1}, 0,0), 
+\end{equation*}
+where $\kappa\colon [0,1] \to \Rset^{K \times K}$ solves the linear differential equation
+\begin{align*}
+\kappa(0) &= \mathbb{I}_K, &
+\tfrac{\df}{\df t} \kappa(t) &= -\kappa(t) \beta(t)^\top \alpha(t)^{-1,\top} \gamma(t).
+\end{align*}
+And elementary matrix calculus gives the inversion
+\begin{equation*}
+(\mathbb{I}_N,0,0,\delta,\epsilon)^{-1} = \Big( \mathbb{I}_N, 0,0, -\delta \big( \mathbb{I}_L + \mathrm{I}(\epsilon^\top \delta) \big)^{-1}, \epsilon \Big).
+\end{equation*}
+Inversion of a general lattice operator is done applying the $\Pop\Top$-factorization
+\begin{align*}
+\big( \Mop + \Top + \Pop \big)^{-1} &= (\Mop + \Top)^{-1} (\Iop+\Pop_\star)^{-1}, & \Pop_\star &= \Pop (\Mop+\Top)^{-1}.
+\end{align*}
+This gives
+\begin{align*}
+(\alpha,\beta,\gamma,\delta,\epsilon)^{-1} &=
+(\alpha^{-1}, \tilde{\beta}, \tilde{\gamma},0,0) * \big( \mathbb{I}_N,0,0, -\delta \big( \mathbb{I}_L + \mathrm{I}(\epsilon_\star^\top \delta) \big)^{-1}, \epsilon_\star \big) \\
+&= \big(\alpha^{-1}, \tilde{\beta}, \tilde{\gamma}, -\delta_\star \big( \mathbb{I}_L + \mathrm{I}(\epsilon_\star^\top \delta) \big)^{-1}, \epsilon_\star \big)
+\end{align*}
+with
+\begin{equation} \label{eq:inversion}
+\begin{aligned}
+\tilde{\beta} &= -\alpha^{-1} \beta \kappa^\top, \\
+\tilde{\gamma} &= \alpha^{-1,\top} \gamma \kappa^{-1}, \\
+\delta_\star &= (\Mop + \Top)^{-1} \delta =\alpha^{-1} \delta + \tilde{\beta} * \mathrm{F}(\tilde{\gamma}^\top \delta), \\
+\epsilon_\star &= \alpha^{-1,\top} \epsilon + \tilde{\gamma} * \mathrm{B}(\tilde{\beta}^\top \epsilon).
+\end{aligned}
+\end{equation}
+Here the formula for $\epsilon_\star$ follows from
+\begin{align*}
+(0,0,0,\delta,\epsilon_\star) &= \Pop_\star = \Pop (\Mop + \Top)^{-1} \\ 
+&=(0,0,0,\delta,\epsilon) * (\alpha^{-1}, \tilde{\beta}, \tilde{\gamma}, 0,0) \\
+&= \big(0,0,0,\delta, \alpha^{-1,\top} \epsilon + \tilde{\gamma} * \mathrm{B}(\tilde{\beta}^\top \epsilon) \big).
+\end{align*}
+
+
+\subsection{Inversion of symmetric operators}
+
+Let $\Sop = (\alpha,\delta,\epsilon)$ be a symmetric lattice operator, i.e.\ the associated 5-function parametrization satisfies
+\begin{align*}
+\alpha &= \alpha^\top, &
+\beta &= \epsilon \vert -\delta, &
+\gamma &= \delta \vert \epsilon.
+\end{align*}
+Then $\gamma$, $\delta$, and $\epsilon$ may be inferred from $\beta$ via
+\begin{align*}
+\gamma &= \beta \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix}, &
+\delta &= \beta \begin{pmatrix}
+0 \\ -\mathbb{I}_L
+\end{pmatrix}, &
+\epsilon &= \beta \begin{pmatrix}
+\mathbb{I}_L \\ 0
+\end{pmatrix}.
+\end{align*}
+Suppose $\Sop^{-1}$ is derived using Eq.~\eqref{eq:inversion}. Then we have
+\begin{align*}
+\bigg\{ \dot{\kappa}^\top \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \bigg\} &= -\gamma^\top \alpha^{-1} \beta \kappa^\top \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \\
+&= \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \beta^\top \alpha^{-1} \beta
+\bigg\{ \kappa^\top \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \bigg\}
+\end{align*}
+and
+\begin{align*}
+\bigg\{ \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \dot{(\kappa^{-1})} \bigg\} &= \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \beta^\top \alpha^{-1,\top} \gamma \kappa^{-1} \\
+&= \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \beta^\top \alpha^{-1} \beta
+\bigg\{ \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \kappa^{-1} \bigg\},
+\end{align*}
+which together with $\kappa(0)^\top = \kappa(0)^{-1} = \mathbb{I}_K $ imply
+\begin{equation*}
+\kappa^\top \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} = \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \kappa^{-1},
+\end{equation*}
+and hence
+\begin{align*}
+\tilde{\gamma} &= \alpha^{-1,\top} \gamma \kappa^{-1} 
+= \alpha^{-1} \beta \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \kappa^{-1}
+= \alpha^{-1} \beta \kappa^\top \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix} \\
+&= \tilde{\beta} \begin{pmatrix}
+0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+\end{pmatrix}.
+\end{align*}
+
+%Since $\Sop^{-1}$ also is symmetric this gives
+%\begin{align*}
+%\tilde{\gamma} &= \tilde{\beta} \begin{pmatrix}
+%0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+%\end{pmatrix}, &
+%\tilde{\delta} &= \tilde{\beta} \begin{pmatrix}
+%0 \\ -\mathbb{I}_L
+%\end{pmatrix}, &
+%\tilde{\epsilon} &= \tilde{\beta} \begin{pmatrix}
+%\mathbb{I}_L \\ 0
+%\end{pmatrix}.
+%\end{align*}
+%Thus, $\tilde{\gamma}$ may be derived from $\tilde{\beta}$. Using this we have
+%\begin{align*}
+%\delta_\star &= \alpha^{-1} \delta -
+%\tilde{\beta} \begin{pmatrix}
+%0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+%\end{pmatrix}
+%\mathrm{F}( \tilde{\beta}^\top \delta), \\
+%\epsilon_\star &= \alpha^{-1} \epsilon +
+%\tilde{\beta} \begin{pmatrix}
+%0 & \mathbb{I}_L \\ -\mathbb{I}_L & 0
+%\end{pmatrix}
+%\mathrm{B}( \tilde{\beta}^\top \epsilon), \\
+%\Sop^{-1} &= \big( \alpha^{-1}, -\delta_\star \big( \mathbb{I}_L + \mathrm{I}(\epsilon_\star^\top \delta) \big)^{-1}, \epsilon_\star \big).
+%\end{align*}
+
+\subsection{Numerical inversion of symmetric lattice operators}
+
+Let $\Sop_1 = (\alpha_1,\delta_1,\epsilon_1)$ and $\Sop_2 = (\alpha_2,\delta_2,\epsilon_2)$ be two symmetric lattice operators. Then we have
+\begin{align*}
+\Sop_1 \Sop_2 &= (\alpha_1 \alpha_2, \beta_{12}, \gamma_{12}, \delta_1 \vert \delta_{12}, \epsilon_{12} \vert \epsilon_2), \\
+\Sop_2 \Sop_1 &= (\alpha_2 \alpha_1, \beta_{21}, \gamma_{21}, \delta_2 \vert \delta_{21}, \epsilon_{21} \vert \epsilon_1),
+\end{align*}
+where $\beta_{12}, \beta_{21}, \gamma_{12}, \gamma_{21}$ are some functions, and where
+\begin{align*}
+\delta_{12} &= \alpha_1 \delta_2 + \epsilon_1 \mathrm{F}(\delta_1^\top \delta_2) - \delta_1 \mathrm{F}(\epsilon_1^\top \delta_2), \\
+\delta_{21} &= \alpha_2 \delta_1 + \epsilon_2 \mathrm{F}(\delta_2^\top \delta_1) - \delta_2 \mathrm{F}(\epsilon_2^\top \delta_1), \\
+\epsilon_{12} &= \alpha_2^\top \epsilon_1 + \delta_2 \mathrm{B}(\epsilon_2^\top \epsilon_1) + \epsilon_2 \mathrm{F}(\delta_2^\top \epsilon_1), \\
+\epsilon_{21} &= \alpha_1^\top \epsilon_2 + \delta_1 \mathrm{B}(\epsilon_1^\top \epsilon_2) + \epsilon_1 \mathrm{F}(\delta_1^\top \epsilon_2).
+\end{align*}
+This implies that a sufficient condition for $\Sop_1 = \Sop_2^{-1}$ is
+\begin{align*}
+\alpha_1 \alpha_2 - \mathbb{I}_N &= 0, & \delta_{12} &= 0, & \delta_{21} &= 0, & \epsilon_{12} &= 0, & \epsilon_{21} &= 0,
+\end{align*}
+and this is also necessary if $\delta_1$ and $\epsilon_2$ are not collinear and if $\delta_2$ and $\epsilon_1$ are not collinear. Thus, the inverse operator may be found minimizing the functional
+\begin{multline*}
+E = \tfrac{1}{2} \mathrm{I}\big( \text{tr}\big( (\alpha_1\alpha_2 - \mathbb{I}_N)^\top (\alpha_1\alpha_2 - \mathbb{I}_N) \big) \big) \\
++ \tfrac{1}{2} \mathrm{I}\big( \text{tr}(\delta_{12}^\top \delta_{12}) \big) 
++ \tfrac{1}{2} \mathrm{I}\big( \text{tr}(\delta_{21}^\top \delta_{21}) \big) 
++ \tfrac{1}{2} \mathrm{I}\big( \text{tr}(\epsilon_{12}^\top \epsilon_{12}) \big) 
++ \tfrac{1}{2} \mathrm{I}\big( \text{tr}(\epsilon_{21}^\top \epsilon_{21}) \big). 
+\end{multline*}
+The minimum equals 0, the functions $\alpha_1$ and $\delta_1 \epsilon_1^\top$ are unique at the minimizer, and we may compute the gradient. Using identities like $\mathrm{I}(f \mathrm{B}(g)) = \mathrm{I}(\mathrm{F}(f) g)$ we find
+\begin{equation*}
+\hspace{-1cm}
+\begin{aligned}
+\frac{\partial E}{\partial \alpha_1} &= \alpha_1 \alpha_2 \alpha_2^\top - \alpha_2^\top + \delta_{12} \delta_2^\top + \epsilon_2 \epsilon_{21}^\top, \\
+\frac{\partial E}{\partial \delta_1} &= 
+\delta_2 \mathrm{B}(\delta_{12}^\top \epsilon_1) - \delta_{12} \mathrm{F}(\delta_2^\top \epsilon_1) 
++ \alpha_2^\top \delta_{21} + \delta_2 \mathrm{B}(\epsilon_2^\top \delta_{12}) - \epsilon_2 \mathrm{B}(\delta_2^\top \delta_{12}) 
++ \epsilon_{21} \mathrm{B}(\epsilon_2^\top \epsilon_1) + \epsilon_2 \mathrm{B}(\epsilon_{21}^\top \epsilon_1)
+\\
+\frac{\partial E}{\partial \epsilon_1} &=
+\delta_{12} \mathrm{F}(\delta_2^\top \delta_1) - \delta_2 \mathrm{B}(\delta_{12}^\top \delta_1)
++ \alpha_2 \epsilon_{12} + \epsilon_2 \mathrm{F}(\delta_2^\top \epsilon_{12}) + \delta_2 \mathrm{B}(\epsilon_2^\top \epsilon_{12})
++ \epsilon_2 \mathrm{F}(\epsilon_{21}^\top \delta_1) + \epsilon_{12} \mathrm{F}(\epsilon_2^\top \delta_1)
+\end{aligned}
+\end{equation*}
+and for later usage we also compute the derivative w.r.t.\ $\Sop_2$, i.e.\
+\begin{equation*}
+\hspace{-1cm}
+\begin{aligned}
+\frac{\partial E}{\partial \alpha_2} &= \alpha_1^\top \alpha_1 \alpha_2 - \alpha_1^\top + \delta_{21} \delta_1^\top + \epsilon_1 \epsilon_{12}^\top, \\
+\frac{\partial E}{\partial \delta_2} &=
+\alpha_1^\top \delta_{12} + \delta_1 \mathrm{B}(\epsilon_1^\top \delta_{12}) - \epsilon_1 \mathrm{B}(\delta_1^\top \delta_{12})
++ \delta_1 \mathrm{B}(\delta_{21}^\top \epsilon_2) - \delta_{21} \mathrm{F}(\delta_1^\top \epsilon_2) 
++ \epsilon_{12} \mathrm{B}(\epsilon_1^\top \epsilon_2) + \epsilon_1 \mathrm{B}(\epsilon_{12}^\top \epsilon_2), \\
+\frac{\partial E}{\partial \epsilon_2} &=
+\delta_{12} \mathrm{F}(\delta_1^\top \delta_2) - \delta_1 \mathrm{B}(\delta_{21}^\top \delta_2)
++ \epsilon_1 \mathrm{F}(\epsilon_{12}^\top \delta_2) + \epsilon_{12} \mathrm{F}(\epsilon_1^\top \delta_2)
++ \alpha_1 \epsilon_{21} + \epsilon_1 \mathrm{F}(\delta_1^\top \epsilon_{21}) + \delta_1 \mathrm{B}(\epsilon_1^\top \epsilon_{21}).
+\end{aligned}
+\end{equation*}
+
+\subsection{Dimension reduction (to be updated)}
+
+The formulae stated above may give 5-function parametrizations with unnecessarily large dimensions $K$ or $L$. To investigate how these dimensions possibly may be reduced let us consider the triangular operator $\beta \langle\gamma 1_{(0,\cdot]},\cdot\rangle = (0,\beta,\gamma,0,0)$. Let $U D U^\top \in \Rset^{K \times K}$ be the eigen decomposition of the positive semi-definite matrix $\langle\beta,\beta\rangle \in \Rset^{K \times K}$, and let $U_0 \in \Rset^{K \times K_0}$ be the columns of $U$ corresponding to the non-zero eigenvalues. Then we have $\beta(t) = \beta(t) U U^\top = \beta(t) U_0 U_0^\top$, and hence
+\begin{equation*}
+(0,\beta,\gamma,0,0) = (0,\beta U_0,\gamma U_0,0,0)
+\end{equation*}
+with $\beta U_0, \gamma U_0\colon [0,1] \to \Rset^{q \times K_0}$ providing a dimension reduction if $K_0 < K$. The same eigenvalue analysis may be applied on the parameters $\gamma$, $\delta$ and $\epsilon$.
+
+
+\section{Implementation in R}
+
+The mathematical objects introduced above have been implemented in an \texttt{R} package named \texttt{operatorCalc} using S4 classes.
+
+\subsection{Piecewise polynomial matrix functions}
+
+A function $f \in \mathcal{H}(N,M)$ is encoded in an S4 class named \texttt{matFct} with the following slots: 
+\begin{itemize}
+\item[@\texttt{mesh}:] An object of class \texttt{mesh}, which is a strictly increasing numeric sequence of length at least two encoding the sampling mesh $a=t_1 < \dotsc < t_p = b$.
+\item[@\texttt{f}:] $(N,M,p)$-array with the sampling of $f$ at the knot points $t_j$.
+\item[@\texttt{g}:] $(N,M,p-1,r)$-array representing the polynomial interpolation of $f$ in the intervals $[t_j,t_{j+1})$. Here $r=0$ is also legal, and implies that the sum over $k$ vanishes in Eq.~\eqref{eq:eval}
+\item[@\texttt{continuous}] $(p-1)$-logical vector. The $j$'th entry specifies whether the function is assumed to be continuous on the interval $[t_j,t_{j+1}]$ in the approximation done when taking pointwise matrix inverses. 
+\end{itemize}
+
+The evaluation of a \texttt{matFct} object $x$ at $t \in [0,1]$ is defined by
+\begin{equation} \label{eq:eval}
+\texttt{eval}(t,x) = (1-s) \cdot x@\texttt{f}[,,j] + s \cdot x@\texttt{f}[,,j+1] + \sum_{k=1}^r s^k \cdot x@\texttt{g}[,,j,k]
+\end{equation}
+when $t \in [t_j,t_{j+1})$ and with $s = \frac{t-t_j}{t_{j+1}-t_j}$, and where $t=b$ is included in the closed interval $[t_{p-1},t_p]$. We see that $\texttt{eval}(t_j,x) = x@\texttt{f}[,,j]$ for $j=1,\dotsc,p-1$. Futhermore, $\texttt{eval}(\cdot,x)$ is continuous if and only if
+\begin{equation*}
+\sum_{k=1}^r x@\texttt{g}[,,,k] = 0.
+\end{equation*}
+
+In the following subsections we describe the arithmetic methods defined on the \texttt{matFct} class.
+
+\subsubsection{Sum of matrix functions} 
+
+The sum of two \texttt{matFct} objects $x$ and $y$ with the same sampling mesh and congruent matrix dimensions is given by
+\begin{align*}
+(x+y)@\texttt{f} &= x@\texttt{f} + y@\texttt{f}, \\
+(x+y)@\texttt{g} &= x@\texttt{g} + y@\texttt{g},
+\end{align*}
+where the terms in the $g$-slot are padded with zeros if the polynomial orders are different. A possible way to do this is to define 
+$q = \min\{ x@\texttt{r}, y@\texttt{r} \}$, $r = \max\{ x@\texttt{r}, y@\texttt{r} \}$, and if $q > 1$ then
+\begin{equation*}
+(x+y)@\texttt{g}[,,,1:(q-1)] = 
+x@\texttt{g}[,,,1:(q-1)] + y@\texttt{g}[,,,1:(q-1)],
+\end{equation*}
+and if $q < r$ then
+\begin{equation*}
+(x+y)@\texttt{g}[,,,q:(r-1)] =
+\begin{cases}
+x@\texttt{g}[,,,q:(r-1)] & \text{if $r = x@\texttt{r}$,} \\
+y@\texttt{g}[,,,q:(r-1)] & \text{if $r = y@\texttt{r}$.} \\
+\end{cases}
+\end{equation*}
+
+\subsubsection{Product of matrix functions}
+
+The sum of two \texttt{matFct} objects $x$ and $y$ with the same sampling mesh and congruent matrix dimensions is given by $(x*y)@\texttt{r} = x@\texttt{r} + y@\texttt{r}$ and
+\begin{align*}
+(x*y)@\texttt{f}[,,j] &= x@\texttt{f}[,,j] * y@\texttt{f}[,,j],
+\end{align*}
+and $(x*y)@\texttt{g}[,,j,h]$ is given as the coefficient of $s^h$ on the right hand side of
+\begin{equation*}
+\hspace{-1cm}
+\begin{aligned}
+x(t) &* y(t) - (1-s) \cdot x@\texttt{f}[,,j] * y@\texttt{f}[,,j] - s \cdot x@\texttt{f}[,,j+1] * y@\texttt{f}[,,j+1] \\
+&= (-s+s^2) \cdot \big( x@\texttt{f}[,,j+1] - x@\texttt{f}[,,j] \big) * \big( y@\texttt{f}[,,j+1] - y@\texttt{f}[,,j] \big) \\
+&\ + \sum_{k=1}^{y@\texttt{r}} s^k \cdot x@\texttt{f}[,,j] * y@\texttt{g}[,,j,k]
++ \sum_{k=1}^{y@\texttt{r}} s^{k+1} \cdot \big( x@\texttt{f}[,,j+1] - x@\texttt{f}[,,j] \big) * y@\texttt{g}[,,j,k] \\
+&\ + \sum_{k=1}^{x@\texttt{r}} s^k \cdot x@\texttt{g}[,,j,k] * y@\texttt{f}[,,j]
++ \sum_{k=1}^{x@\texttt{r}} s^{k+1} \cdot x@\texttt{g}[,,j,k] * \big( y@\texttt{f}[,,j+1] - y@\texttt{f}[,,j] \big) \\
+&\ + \sum_{k=1}^{x@\texttt{r}} \sum_{l=1}^{y@\texttt{r}} s^{k+l}\cdot x@\texttt{g}[,,j,k] * y@\texttt{g}[,,j,l].
+\end{aligned}
+\end{equation*}
+
+\subsubsection{Forward integral of a matrix function}
+
+The forward integral $\int_0^t x(u)\, \df u$ of a \texttt{matFct} object $x$ is given by
+\begin{equation*}
+\hspace{-1cm}
+\begin{aligned}
+\mathrm{F}x@\texttt{f}[,,1] &= 0, \\
+\mathrm{F}x@\texttt{f}[,,j+1] &\overset{j \ge 1}{=} \mathrm{F}x@\texttt{f}[,,j] + (t_{j+1} - t_j) \cdot \bigg( \frac{x@\texttt{f}[,,j] + x@\texttt{f}[,,j+1]}{2} + \sum_{k=1}^{x@\texttt{r}} \frac{x@\texttt{g}[,,j,k]}{k+1} \bigg), \\
+\mathrm{F}x@\texttt{g}[,,j,2] &= (t_{j+1}-t_j) \cdot \frac{x@\texttt{f}[,,j+1] - x@\texttt{f}[,,j] + x@\texttt{g}[,,j,1]}{2}, \\
+\mathrm{F}x@\texttt{g}[,,j,k] &\overset{3 \le k \le r+1}{=} (t_{j+1}-t_j) \cdot \frac{x@\texttt{g}[,,j,k-1]}{k}, \\
+\mathrm{F}x@\texttt{g}[,,j,1] &= -\sum_{k=2}^{r+1} \mathrm{F}x@\texttt{g}[,,j,k].
+\end{aligned}
+\end{equation*}
+
+\subsubsection{Backward integral of a matrix function}
+
+The backward integral $\int_t^1 x(u)\, \df u = \int_{t_j}^1 x(u)\, \df u - \int_{t_j}^t x(u)\, \df u$ of a \texttt{matFct} object $x$ is given by
+\begin{equation*}
+\hspace{-1cm}
+\begin{aligned}
+\mathrm{B}x@\texttt{f}[,,p] &= 0, \\
+\mathrm{B}x@\texttt{f}[,,j-1] &\overset{j \le p}{=} \mathrm{B}x@\texttt{f}[,,j] + (t_j - t_{j-1}) \cdot \bigg( \frac{x@\texttt{f}[,,j-1] + x@\texttt{f}[,,j]}{2} + \sum_{k=1}^{x@\texttt{r}} \frac{x@\texttt{g}[,,j-1,k]}{k+1} \bigg), \\
+\mathrm{B}x@\texttt{g}[,,j,2] &= -(t_{j+1}-t_j) \cdot \frac{x@\texttt{f}[,,j+1] - x@\texttt{f}[,,j] + x@\texttt{g}[,,j,1]}{2}, \\
+\mathrm{B}x@\texttt{g}[,,j,k] &\overset{3 \le k \le r+1}{=} -(t_{j+1}-t_j) \cdot \frac{x@\texttt{g}[,,j,k-1]}{k}, \\
+\mathrm{B}x@\texttt{g}[,,j,1] &= -\sum_{k=2}^{r+1} \mathrm{B}x@\texttt{g}[,,j,k].
+\end{aligned}
+\end{equation*}
+
+
+\subsubsection{Triangular evaluation of a matrix function}
+
+The triangular evaluation $\big\{ \int_{t_{j-1}}^{t_j} \frac{t-t_{j-1}}{t_j-t_{j-1}} x(t)\, \df t + \int_{t_j}^{t_{j+1}} \frac{t_{j+1}-t}{t_{j+1}-t_j} x(t)\, \df t \big\}_{j=1,\dotsc,p}$ of a \texttt{matFct} object $x$ is an (N,M,p)-array $\mathrm{T}x$ with
+\begin{align*}
+\mathrm{T}x[,,1] &= (t_2-t_1) \cdot \bigg( \frac{x@\texttt{f}[,,1]}{3} + \frac{x@\texttt{f}[,,2]}{6} + \sum_{k=1}^{x@\texttt{r}} \frac{x@\texttt{g}[,,1,k]}{(k+1)(k+2)} \bigg) \\
+\mathrm{T}x[,,j] &\overset{1 < j < p}{=} (t_j-t_{j-1}) \cdot \bigg( \frac{x@\texttt{f}[,,j-1]}{6} + \frac{x@\texttt{f}[,,j]}{3} + \sum_{k=1}^{x@\texttt{r}} \frac{x@\texttt{g}[,,j-1,k]}{k+2} \bigg) \\
+&\qquad + (t_{j+1}-t_j) \cdot \bigg( \frac{x@\texttt{f}[,,j]}{3} + \frac{x@\texttt{f}[,,j+1]}{6} + \sum_{k=1}^{x@\texttt{r}} \frac{x@\texttt{g}[,,j,k]}{(k+1)(k+2)} \bigg) \\
+\mathrm{T}x[,,p] &= (t_p-t_{p-1}) \cdot \bigg( \frac{x@\texttt{f}[,,p-1]}{6} + \frac{x@\texttt{f}[,,p]}{3} + \sum_{k=1}^{x@\texttt{r}} \frac{x@\texttt{g}[,,p-1,k]}{k+2} \bigg),
+\end{align*}
+where $t_0=0$ and $t_{p+1}=1$.
+
+
+\subsubsection{Super sampling}
+
+Below we describe the recoding of a \texttt{matFct} object $x$ sampled at a finer mesh. Suppose that $t_j \le t^\text{new}_n < t^\text{new}_{n+1} \le t_{j+1}$, and let $t \in [t^\text{new}_n, t^\text{new}_{n+1})$ be given. Then
+\begin{align*}
+s &= \frac{t-t_j}{t_{j+1}-t_j} = \frac{t^\text{new}_{n+1}-t^\text{new}_n}{t_{j+1}-t_j} s_\text{new} + \frac{t^\text{new}_n-t_j}{t_{j+1}-t_j}, &
+s_\text{new} &= \frac{t-t^\text{new}_n}{t^\text{new}_{n+1}-t^\text{new}_n},
+\end{align*}
+and hence
+\begin{align*}
+\sum_{l=1}^r g_l \cdot s^l &= \sum_{l=1}^r \sum_{k=0}^l {l \choose k} \bigg( \frac{t^\text{new}_n-t_j}{t_{j+1}-t_j} \bigg)^{l-k} \bigg(\frac{t^\text{new}_{n+1}-t^\text{new}_n}{t_{j+1}-t_j}\bigg)^k g_l \cdot s_\text{new}^k \\
+&= \sum_{l=1}^r \bigg( \frac{t^\text{new}_n-t_j}{t_{j+1}-t_j} \bigg)^l g_l +
+\sum_{k=1}^r \sum_{l=k}^r {l \choose k} \bigg( \frac{t^\text{new}_n-t_j}{t_{j+1}-t_j} \bigg)^{l-k} \bigg(\frac{t^\text{new}_{n+1}-t^\text{new}_n}{t_{j+1}-t_j}\bigg)^k g_l \cdot s_\text{new}^k.
+\end{align*}
+Here the first term should be added to the $f^\text{new}$ of the super sampled function, the second term contributes to $g^\text{new}_k$, and the linear part added via $\mathrm{diff}(f^\text{new})$ should be removed from the $g^\text{new}_1$.
+
+\subsection{Lattice operator}
+
+A lattice operator $\Lop$ is encoded in an S4 class named \texttt{operator} with the following slots: 
+\begin{itemize}
+\item[@\texttt{alpha}:] \texttt{matFct} object.
+\item[@\texttt{beta}:] \texttt{matFct} object.
+\item[@\texttt{gamma}:] \texttt{matFct} object.
+\item[@\texttt{delta}:] \texttt{matFct} object.
+\item[@\texttt{epsilon}:] \texttt{matFct} object.
+\end{itemize}
+
+\subsection{Symmetric lattice operator}
+
+A symmetric lattice operator $\Sop$ is encoded in an S4 class named \texttt{symmOperator} with the following slots: 
+\begin{itemize}
+\item[@\texttt{alpha}:] \texttt{matFct} object.
+\item[@\texttt{delta}:] \texttt{matFct} object.
+\item[@\texttt{epsilon}:] \texttt{matFct} object.
+\end{itemize}
+In principle the alpha-sloth should contain a symmetric matrix valued function. This is not checked, but the alpha-sloth will be symmetrized in the operator inversion.
+
+
+\section{Likelihood estimation of $\Sop$ operators}
+
+Let $X_1,\dotsc,X_n$ be i.id.\ from $\mathcal{N}(0,\hat{\Sop}_0)$ equidistant sampled at $t_j = \frac{j-1}{p-1}$ for $j=1,\dotsc,p$, where $\Sop_0$ is some symmetric lattice operator and the covariance matrix $\hat{\Sop}_0 \in \Rset^{p \times p}$ is defined below. Let $(\alpha,\delta,\epsilon)$ be the 3-function parametrization of symmetric lattice operators with some $N, L \in \Nset$, and let the upper triangular part of the symmetric matrix $\hat{\Sop}_{\alpha,\delta,\epsilon} \in \Rset^{(N \times N) \times (p \times p)}$ be defined by
+\begin{equation*}
+\hat{\Sop}_{\alpha,\delta,\epsilon}(i,j) = \alpha(t_j) 1_{i=j} + p^{-1} \delta(t_i) \epsilon(t_j)^\top \in \Rset^{N \times N}, \quad \text{for $1 \le i \le j \le p$.}
+\end{equation*}
+The inverse of a symmetric lattice operator is a symmetric lattice operator, and we have the precision operator $\Sop_{\alpha,\delta,\epsilon}^{-1} = \Sop_{\tilde{\alpha},\tilde{\delta},\tilde{\epsilon}}$ with $\tilde{\alpha}(t) = \alpha(t)^{-1}$ and some $\tilde{\delta}, \tilde{\epsilon}\colon [0,1] \to \Rset^{N \times L}$. 
+
+Twice the negative log likelihood may be expressed using either the covariance or the precision, i.e.\
+\begin{align*}
+-2\log L(\alpha,\delta,\epsilon) &= n \log\det \hat{\Sop}_{\alpha,\delta,\epsilon} + \sum_{i=1}^n \tr\big\langle X_i, \hat{\Sop}_{\alpha,\delta,\epsilon}^{-1} X_i \big\rangle \\
+&= -n \log\det \hat{\Sop}_{\alpha,\delta,\epsilon}^{-1} + \sum_{i=1}^n \tr\big\langle X_i, \hat{\Sop}_{\alpha,\delta,\epsilon}^{-1} X_i \big\rangle.
+\end{align*}
+Let $X = \{ X_i^{\text{embedding}} \}_{i=1,\dotsc,n} \in \mathcal{H}(N,n)$ be the concatenation of the embedded observations. The variational derivatives against $f=\alpha$, $\delta$ or $\epsilon$ are given by
+\begin{equation*}
+\hspace{-2cm}
+\begin{aligned}
+\frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial f} &= \sum_{i=1}^n \Bigg\{ -\tr\bigg[ \hat{\Sop}_{\alpha,\delta,\epsilon}^{-1} \frac{\partial \hat{\Sop}_{\alpha,\delta,\epsilon}}{\partial f} \bigg] + \tr\bigg\langle X_i, \frac{\partial \hat{\Sop}_{\alpha,\delta,\epsilon}}{\partial f} X_i \bigg\rangle \Bigg\} \\
+&\approx \frac{\partial}{\partial f} \Bigg\{ -n \int_0^1 \tr\big[ \tilde{\alpha}(s) \alpha(s)\big] \df s - n \int_0^1 \tr\big[ \tilde{\alpha}(s) \delta(s) \epsilon(s)^\top\big] \df s \\
+&\quad - n \int_0^1 \tr\big[ \tilde{\delta}(s) \tilde{\epsilon}(s)^\top \alpha(s) \big] \df s - 2n \int_0^1 \int_s^1 \tr\big[ \tilde{\delta}(s) \tilde{\epsilon}(u)^\top \epsilon(u) \delta(s)^\top \big] \df u\, \df s \\
+&\quad + \int_0^1 \tr\big[ \alpha(s) X(s) X(s)^\top \big] \df s + 2 \int_0^1 \int_s^1 \tr\big[ \delta(s) \epsilon(u)^\top X(u) X(s)^\top \big] \df u\, \df s \Bigg\} \\
+&= \frac{\partial}{\partial f} \Bigg\{ -n \int_0^1 \tr\big[ \tilde{\alpha}(s) \alpha(s)\big] \df s - n \int_0^1 \tr\big[ \tilde{\alpha}(s) \delta(s) \epsilon(s)^\top\big] \df s \\
+&\quad - n \int_0^1 \tr\big[ \tilde{\delta}(s) \tilde{\epsilon}(s)^\top \alpha(s) \big] \df s - 2n \int_0^1 \int_0^u \tr\big[ \tilde{\delta}(s) \tilde{\epsilon}(u)^\top \epsilon(u) \delta(s)^\top \big] \df s\, \df u \\
+&\quad + \int_0^1 \tr\big[ \alpha(s) X(s) X(s)^\top \big] \df s + 2 \int_0^1 \int_0^u \tr\big[ \delta(s) \epsilon(u)^\top X(u) X(s)^\top \big] \df s\, \df u \Bigg\}.
+\end{aligned}
+\end{equation*}
+This gives
+\begin{align*}
+\frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \alpha} &= -n \tilde{\alpha} - n \frac{\tilde{\delta} * \tilde{\epsilon}^\top + \tilde{\epsilon} * \tilde{\delta}^\top}{2} + X * X^\top, \\
+\frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \delta} &= -n \tilde{\alpha} * \epsilon - 2 n \tilde{\delta} * \mathrm{B}(\tilde{\epsilon}^\top * \epsilon) + 2 X * \mathrm{B}(X^\top * \epsilon), \\
+\frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \epsilon} &= -n \tilde{\alpha} * \delta - 2 n \tilde{\epsilon} * \mathrm{F}(\tilde{\delta}^\top * \delta) + 2 X * \mathrm{F}(X^\top * \delta).
+\end{align*}
+If $\alpha$, $\delta$, $\epsilon$ are piecewise linear, then derivative w.r.t.\ knot points may be found using triangular evaluation of the functional derivatives, i.e.
+\begin{align*}
+\bigg\{ \frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \alpha_j} \bigg\}_{j=1,\dotsc,p} &= \mathrm{T}\bigg( \frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \alpha} \bigg), \\
+\bigg\{ \frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \delta_j} \bigg\}_{j=1,\dotsc,p} &= \mathrm{T}\bigg( \frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \delta} \bigg), \\
+\bigg\{ \frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \epsilon_j} \bigg\}_{j=1,\dotsc,p} &= \mathrm{T}\bigg( \frac{-2 \partial \log L(\alpha,\delta,\epsilon)}{\partial \epsilon} \bigg).
+\end{align*}
+These computations may be done rather easily using the computational engine introduced above.
+
+\hfill{$\Box$}
+\end{document}

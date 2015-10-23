@@ -1,0 +1,17 @@
+{
+    "contents" : "#include <RcppArmadillo.h>\n#include <Rcpp.h>\n\nusing namespace Rcpp;\n\n// [[Rcpp::export]]\nSEXP inverse(NumericVector f, SEXP g, double order, double super, LogicalVector continuous) {\n  // Assume that dimensions match\n  // No sanity check performed!\n  \n  NumericVector vec_g(g);\n  IntegerVector dims = vec_g.attr(\"dim\");\n\n  int p = dims[2];      // NB: 1 less in order to simplify code\n  int r = dims[3];\n  \n  arma::cube ff(f.begin(), dims[0], dims[1], p+1, false);\n  arma::cube gg(vec_g.begin(), dims[0], dims[1], r*p, false);\n  arma::cube inv_f(dims[0], dims[1], p+1);\n  arma::mat  inv_g(std::max(1.0,order)*p, dims[0]*dims[1]); inv_g.fill(0.0);\n  arma::mat  tmp(dims[0], dims[1]);\n  \n  // find inverse at knot points\n  for (int j=0; j<p; j++) inv_f.slice(j) = arma::inv(ff.slice(j));\n  tmp = ff.slice(p);\n  for (int k=0; k<r; k++) tmp += gg.slice(p-1+k*p);\n  inv_f.slice(p) = arma::inv(tmp);\n  \n  // if order==0 make piecewise constant function\n  if (order==0) {\n    for (int j=0; j<p; j++) inv_g.row(j) = arma::trans(arma::vectorise(inv_f.slice(j)-inv_f.slice(j+1)));\n  }\n  \n  // make interpolation of inverse between knot points\n  if ((order>1) && (super>0)) {\n    // there are internal intervals points and an OLS to be solved\n    // set-up matrices\n    int q_cont = std::min(order-1,super);\n    int q_discont = std::min(order,super);\n    arma::vec s(super);\n    arma::mat A_cont(super,q_cont);\n    arma::mat A_discont(super,q_discont);\n    arma::mat B(super,dims[0]*dims[1]);\n\n    // precomputations\n    for (int k=0; k<super; k++) s.row(k) = (k+1)/(super+1);\n    for (int k=0; k<super; k++) for (int l=0; l<q_cont; l++) A_cont(k,l) = pow(s(k),l+2)-s(k);\n    for (int k=0; k<super; k++) for (int l=0; l<q_discont; l++) A_discont(k,l) = pow(s(k),l+1);\n\n    // loop over sampling intervals\n    for (int j=0; j<p; j++) {\n      // make interval data by removing linear interpolation\n      for (int k=0; k<super; k++) {\n        tmp = (1-s(k))*ff.slice(j) + s(k)*ff.slice(j+1);\n        for (int l=0; l<r; l++) tmp += pow(s(k),l+1)*gg.slice(j+l*p);\n        B.row(k) = arma::trans(arma::vectorise(arma::inv(tmp)-(1-s(k))*inv_f.slice(j)-s(k)*inv_f.slice(j+1)));\n      }\n      // make design matrix\n      if (continuous(j)) {\n        // enforce continuity in this interval\n        inv_g.rows(j*order+1,j*order+q_cont) = arma::solve(A_cont,B);\n        for (int k=1; k<=q_cont; k++) inv_g.row(j*order) -= inv_g.row(j*order+k);\n      } else {\n        // allow for discontinuity in this interval\n        inv_g.rows(j*order,j*order+q_discont-1) = arma::solve(A_discont,B);\n      }\n    }\n  }\n  \n  // return to R\n  return(List::create(Rcpp::Named(\"f\")=inv_f, Rcpp::Named(\"g\")=arma::trans(inv_g)));\n}\n",
+    "created" : 1442924752628.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3150570253",
+    "id" : "44FAE456",
+    "lastKnownWriteTime" : 1408434378,
+    "path" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/inverse.cpp",
+    "project_path" : "src/inverse.cpp",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "cpp"
+}

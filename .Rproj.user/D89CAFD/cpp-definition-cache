@@ -1,0 +1,212 @@
+[
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/approximate.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "approximate(NumericVector, SEXP, IntegerVector, NumericVector, LogicalVector, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@approximate#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#*$@S@SEXPREC#$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#S0_#$@N@Rcpp@C@Vector>#VI10#@N@Rcpp@CT>1#T@PreserveStorage#d#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/approximate.cpp",
+        "file_last_write" : 1408168806
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/backward.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "backward(NumericVector, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@backward#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#*$@S@SEXPREC#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/backward.cpp",
+        "file_last_write" : 1408364077
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/evaluate.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "evaluate(IntegerVector, NumericVector, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@evaluate#$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S1_#*$@S@SEXPREC#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/evaluate.cpp",
+        "file_last_write" : 1408087422
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/forward.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "forward(NumericVector, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@forward#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#*$@S@SEXPREC#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/forward.cpp",
+        "file_last_write" : 1408364085
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/integral.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "integral(NumericVector, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@integral#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#*$@S@SEXPREC#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/integral.cpp",
+        "file_last_write" : 1407919355
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/inv_beta.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "inv_beta(NumericVector, SEXP, NumericVector, SEXP, NumericVector, double, double, LogicalVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@inv_beta#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#*$@S@SEXPREC#S0_#S1_#S0_#d#d#$@N@Rcpp@C@Vector>#VI10#@N@Rcpp@CT>1#T@PreserveStorage#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/inv_beta.cpp",
+        "file_last_write" : 1408966644
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/inv_gamma.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "inv_gamma(NumericVector, SEXP, NumericVector, SEXP, NumericVector, double, double, LogicalVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@inv_gamma#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#*$@S@SEXPREC#S0_#S1_#S0_#d#d#$@N@Rcpp@C@Vector>#VI10#@N@Rcpp@CT>1#T@PreserveStorage#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/inv_gamma.cpp",
+        "file_last_write" : 1408967647
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/inverse.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "inverse(NumericVector, SEXP, double, double, LogicalVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@inverse#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#*$@S@SEXPREC#d#d#$@N@Rcpp@C@Vector>#VI10#@N@Rcpp@CT>1#T@PreserveStorage#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/inverse.cpp",
+        "file_last_write" : 1408434378
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/multFct.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "multFct(NumericVector, SEXP, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@multFct#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#*$@S@SEXPREC#S0_#S1_#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/multFct.cpp",
+        "file_last_write" : 1408356065
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/multFct_left.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "multFct_left(SEXP, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@multFct_left#*$@S@SEXPREC#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/multFct_left.cpp",
+        "file_last_write" : 1407919695
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/multFct_right.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "multFct_right(NumericVector, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@multFct_right#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#*$@S@SEXPREC#S1_#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/multFct_right.cpp",
+        "file_last_write" : 1407919741
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/solveFct.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "solveFct(NumericVector, SEXP, NumericVector, SEXP, double, double, LogicalVector)",
+                "parent_name" : "",
+                "usr" : "c:@F@solveFct#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#*$@S@SEXPREC#S0_#S1_#d#d#$@N@Rcpp@C@Vector>#VI10#@N@Rcpp@CT>1#T@PreserveStorage#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/solveFct.cpp",
+        "file_last_write" : 1408959887
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/superSample.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "superSample(SEXP, IntegerVector, NumericVector, NumericVector, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@superSample#*$@S@SEXPREC#$@N@Rcpp@C@Vector>#VI13#@N@Rcpp@CT>1#T@PreserveStorage#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S3_#S3_#S0_#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/superSample.cpp",
+        "file_last_write" : 1407930344
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/triangular.cpp",
+                "kind" : 6,
+                "line" : 7,
+                "name" : "triangular(NumericVector, NumericVector, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@triangular#$@N@Rcpp@C@Vector>#VI14#@N@Rcpp@CT>1#T@PreserveStorage#S0_#*$@S@SEXPREC#"
+            }
+        ],
+        "file" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/src/triangular.cpp",
+        "file_last_write" : 1407919899
+    }
+]

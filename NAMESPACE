@@ -1,0 +1,6 @@
+useDynLib(operatorCalc)
+exportMethods("plot","evaluate","superSample","forward","backward","integral","triangular","transpose","inverse")
+exportClasses("mesh","matFct","operator","symmOperator")
+export("mesh","matFct","operator","symmOperator","as.operator","approximate","E.symm.id","dE.symm.id")
+importFrom(Rcpp,evalCpp)
+importFrom(graphics,plot)

@@ -1,0 +1,16 @@
+{
+    "contents" : "useDynLib(operatorCalc)\nexportMethods(\"plot\",\"evaluate\",\"superSample\",\"forward\",\"backward\",\"integral\",\"triangular\",\"transpose\",\"inverse\")\nexportClasses(\"mesh\",\"matFct\",\"operator\",\"symmOperator\")\nexport(\"mesh\",\"matFct\",\"operator\",\"symmOperator\",\"as.operator\",\"approximate\",\"E.symm.id\",\"dE.symm.id\")\nimportFrom(Rcpp,evalCpp)\nimportFrom(graphics,plot)\n",
+    "created" : 1410511723769.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1790260805",
+    "id" : "6F3EBF79",
+    "lastKnownWriteTime" : 1410511742,
+    "path" : "C:/Users/pdq668/Dropbox/Full-rank functional regression/operatorCalc/NAMESPACE",
+    "project_path" : "NAMESPACE",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_namespace"
+}

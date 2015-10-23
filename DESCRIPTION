@@ -1,0 +1,14 @@
+Package: operatorCalc
+Type: Package
+Title: Calculus for a class of operators on a multvariate function space
+Version: 1.0
+Date: 2014-08-05
+Author: Bo Markussen
+Maintainer: Bo Markussen <bomar@math.ku.dk>
+Description: Aritmetic methods for a class of piecewise polynomial matrix functions. Aritmetic methods for the class of so-called lattice operators on function space.
+License: GPL-2
+LazyLoad: yes
+Imports: Rcpp
+LinkingTo: Rcpp, RcppArmadillo
+VignetteBuilder: knitr
+Suggests: knitr
